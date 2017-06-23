@@ -4,7 +4,7 @@
 # Nick Pleatsikas, 2017.
 
 # Move all dotfiles.
-find . -type f -iname '*.' -exec mv -t ~ {} +
+find . -type f -iname "*." -exec mv -t ~ {} +
 
 # Check if last command ran correctly. Everything depends on this...
 if [[ $? -ne 0 ]]; then
@@ -45,3 +45,8 @@ fi
 if [[ ! -d ~/.ssh/ ]]; then
 	mkdir ~/.ssh
 fi
+
+# Configure git.
+git config --global user.email "nick@pleatsikas.me"
+git config --global user.name "MrFlynn"
+git config --global core.editor vim
