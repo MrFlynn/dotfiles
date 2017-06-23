@@ -23,7 +23,7 @@ if [[ ! -d ~/.vim/colors ]]; then
 fi
 
 # Install vundle packages
-vim +PluginInstal +qall
+vim +PluginInstall +qall
 
 # If last command ran correctly, then move theme from Vundle download.
 if [[ $? -e 0 ]]; then
