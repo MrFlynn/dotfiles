@@ -3,7 +3,7 @@
 # Move in script.
 # Nick Pleatsikas, 2017.
 
-# Move all dotfiles
+# Move all dotfiles.
 find . -type f -iname '*.' -exec mv -t ~ {} +
 
 # Check if last command ran correctly. Everything depends on this...
@@ -12,9 +12,17 @@ if [[ $? -ne 0 ]]; then
 	exit 1
 fi
 
-# Move zsh theme
+# Move zsh theme.
 if [[ -d ~/.oh-my-zsh/themes ]]; then
 	mv .oh-my-zsh/themes/dracula.zsh-theme ~/.oh-my-zsh/themes/
+fi
+
+# Install Vundle
+git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+
+# If last command failed, then prompt but continue running.
+if [[ $? -ne 0 ]]; then
+	echo "Vundle install failed."
 fi
 
 # Check if the colors dir exists before moving the theme to it.
