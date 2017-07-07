@@ -53,4 +53,4 @@ filetype plugin indent on    " required
 Plugin 'chr4/nginx.vim'
 Plugin 'tpope/vim-surround'
 Plugin 'tmux-plugins/vim-tmux'
-Plugin 'rakr/vim-one'
+Plugin 'dracula/vim'
