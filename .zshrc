@@ -89,3 +89,6 @@ fpath=(/usr/local/share/zsh-completions $fpath)
 
 alias getip='arp -a | awk '\''NR==1 { print $ 2}'\'''
 alias docker-rm-all='docker rm $(docker ps -a -q)'
+
+# Change color of directories to something that sucks less:
+eval `dircolors ~/.dircolors`
