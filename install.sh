@@ -20,7 +20,7 @@ if [[ $? -ne 0 ]] &&  [[ -d ~/.oh-my-zsh-themes ]]; then
 	mv .oh-my-zsh/themes/dracula.zsh-theme ~/.oh-my-zsh/themes/
 fi
 
-# Install Vundle
+# Install Vundle.
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim --depth 1
 
 # If last command failed, then prompt but continue running.
