@@ -12,13 +12,16 @@ if [[ $? -ne 0 ]]; then
 	exit 1
 fi
 
-# Move zsh theme.
-if [[ -d ~/.oh-my-zsh/themes ]]; then
+# Clone newest copy of Dracula theme to ZSH.
+git clone https://github.com/dracula/zsh.git ~/.oh-my-zsh/themes/ --depth 1 
+
+# If the last command failed to run and the dir exits, move the backup.
+if [[ $? -ne 0 ]] &&  [[ -d ~/.oh-my-zsh-themes ]]; then
 	mv .oh-my-zsh/themes/dracula.zsh-theme ~/.oh-my-zsh/themes/
 fi
 
 # Install Vundle
-git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim --depth 1
 
 # If last command failed, then prompt but continue running.
 if [[ $? -ne 0 ]]; then
