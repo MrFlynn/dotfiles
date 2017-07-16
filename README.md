@@ -1,13 +1,16 @@
 ## .dotfiles
 
-These are the dotfile I use (for the most part) on \*nix systems that I work on. 
+These are the dotfile I use (for the most part) on Bash for Windows (WSL; Windows 
+Subsystem for Linux). 
 
 ### Installation:
-#### Mac:
-Install Homebrew, ZSH, git, and oh-my-zsh before you get started.
-
-#### Linux:
-Using whatever package manager, install ZSH and git. Then install oh-my-zsh.
+#### Install Dependencies:
+Install ZSH, [oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh), and git before running the install script:
+```bash
+$ sudo apt-get update
+$ sudo apt-get install zsh git
+```
+(At the time of writing this, Ubuntu was the only option).
 
 #### Let's install:
 From the terminal, run these commands:
