@@ -59,6 +59,7 @@ source $ZSH/oh-my-zsh.sh
 
 # Custom completions FPATH
 fpath=(/usr/local/share/zsh-completions $fpath)
+fpath+=~/.zfunc
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
@@ -89,6 +90,12 @@ fpath=(/usr/local/share/zsh-completions $fpath)
 
 alias getip='arp -a | awk '\''NR==1 { print $ 2}'\'''
 alias docker-rm-all='docker rm $(docker ps -a -q)'
+
+# Functional aliase; i.e. aliases that have a parameter
+shortname() {
+	# Removes prefix from shared lab files.
+	rename 's/^dturn003_nplea001_lab${1}_//' *
+}
 
 # Miniconda
 export PATH=/Users/nick/Documents/miniconda3/bin:$PATH

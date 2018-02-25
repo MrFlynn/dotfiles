@@ -38,10 +38,10 @@ vim +PluginInstall +qall
 
 # If last command ran correctly, then move theme from Vundle download.
 if [[ $? -e 0 ]]; then
-	mv ~/.vim/bundle/vim/colors/dracula.vim ~/.vim/colors/
+	mv ~/.vim/bundle/onedark.vim/colors/onedark.vim ~/.vim/colors/
 else
 	echo "Vundle installation failed... Using backup."
-	mv .vim/colors/dracula.vim ~/.vim/colors/
+	mv .vim/colors/onedark.vim ~/.vim/colors/
 fi
 
 # Check if .ssh dir exists before moving configuration files to it.

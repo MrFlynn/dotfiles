@@ -18,7 +18,7 @@ if (empty($TMUX))
   endif
 endif
 
-color dracula
+color onedark
 
 " ---- Vundle Stuff ----
 
@@ -50,7 +50,7 @@ filetype plugin indent on    " required
 " Put your non-Plugin stuff after this line
 "
 " Plugins:
-Plugin 'chr4/nginx.vim'
 Plugin 'tpope/vim-surround'
 Plugin 'tmux-plugins/vim-tmux'
-Plugin 'dracula/vim'
+Plugin 'sheerun/vim-polyglot'
+Plugin 'joshdick/onedark.vim'
