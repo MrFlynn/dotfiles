@@ -1,4 +1,5 @@
-set tabstop=4 	" I like having 4 spaces and not 8
+set tabstop=2 softtabstop=0 expandtab shiftwidth=2 smarttab " Two spaces instead of tab. Work thing.
+set ruler
 syntax on		" Syntax highlighting
 
 " ---- Color Scheme ----
