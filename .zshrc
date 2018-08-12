@@ -90,12 +90,7 @@ fpath+=~/.zfunc
 
 alias getip='arp -a | awk '\''NR==1 { print $ 2}'\'''
 alias docker-rm-all='docker rm $(docker ps -a -q)'
-
-# Functional aliase; i.e. aliases that have a parameter
-shortname() {
-	# Removes prefix from shared lab files.
-	rename 's/^dturn003_nplea001_lab${1}_//' *
-}
+alias mcversions="curl https://launchermeta.mojang.com/mc/game/version_manifest.json | jq .versions | jq -r '.[].id'"
 
 # Miniconda
 export PATH=/Users/nick/Documents/miniconda3/bin:$PATH
