@@ -30,16 +30,28 @@ source $ZSH/oh-my-zsh.sh
 fpath=(/usr/local/share/zsh-completions $fpath)
 fpath+=~/.zfunc
 
+# --- Path & Variables ----
+
 # SSH key path
 export SSH_KEY_PATH="~/.ssh/rsa_id"
 
-# Aliases
+# Add Miniconda to path.
+export PATH=$HOME/Documents/miniconda3/bin:$PATH
+
+# HSTR history file.
+export HISTFILE=~/.zsh_history
+
+# GOPATH settings.
+export GOPATH=$HOME/.go
+
+# --- Aliases ---
 alias getip='arp -a | awk '\''NR==1 { print $ 2}'\'''
 alias docker-rm-all='docker rm $(docker ps -a -q)'
 alias mcversions="curl https://launchermeta.mojang.com/mc/game/version_manifest.json | jq .versions | jq -r '.[].id'"
 alias reload="source $HOME/.zshrc"
+alias ntmux="tmux new-session"
 
-# Functions
+# --- Functions ---
 fileconvert () {
   # Inputs
   local input_extension="$1"
@@ -62,11 +74,12 @@ serial () {
   fi
 }
 
-# Add Miniconda to path.
-export PATH=$HOME/.miniconda3/bin:$PATH
-
-# HSTR history file.
-export HISTFILE=~/.zsh_history
-
-# GOPATH settings.
-export GOPATH=$HOME/go
+alert () {
+  local text="$1"
+  
+  if [[ $# -ne 1 ]]; then
+    echo "Help: alert alert_text"
+  else
+    $(command -v osascript) -e "display notification \"$text\"" with title \"$(tty)\"""
+  fi
+}
