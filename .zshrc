@@ -33,16 +33,28 @@ fpath+=~/.zfunc
 # --- Path & Variables ----
 
 # SSH key path
-export SSH_KEY_PATH="~/.ssh/rsa_id"
+export SSH_KEY_PATH="$HOME/.ssh/"
 
 # Add Miniconda to path.
-export PATH=$HOME/Documents/miniconda3/bin:$PATH
+export PATH=$HOME/.miniconda3/bin:$PATH
 
-# HSTR history file.
+# HSTR configuration.
 export HISTFILE=~/.zsh_history
+export HSTR_CONFIG=hicolor,prompt-bottom,blacklist #favorites-view
 
 # GOPATH settings.
 export GOPATH=$HOME/.go
+
+# --- Keybinds ---
+
+# Navigation
+bindkey "\e\e[D" backward-word
+bindkey "\e\e[C" forward-word
+bindkey "^[a" beginning-of-line
+bindkey "^[e" end-of-line
+
+# Ctrl-r remap for hh.
+bindkey -s "\C-r" "\eqhstr\n"
 
 # --- Aliases ---
 alias getip='arp -a | awk '\''NR==1 { print $ 2}'\'''
@@ -70,7 +82,7 @@ serial () {
   if [[ $# -ne 1 ]]; then
     echo "Help: serial port_name"
   else
-    $(command -v screen) "$port" 9600,cs8,-ixon,-ixoff
+    $(command -v screen) "$port" 9600,cs8,-ixon,-ixoff -L
   fi
 }
 
