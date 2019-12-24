@@ -41,6 +41,15 @@ bindkey "^[e" end-of-line
 # Ctrl-r remap for hh.
 bindkey -s "\C-r" "\eqhstr\n"
 
+# Make ctrl-w behave in a more sane manner (only delete to /).
+backward-only-delete-dir () {
+  local WORDCHARS=${WORDCHARS/\/}
+  zle backward-kill-word
+}
+
+zle -N backward-only-delete-dir
+bindkey "\C-w" backward-only-delete-dir
+
 # --- Aliases ---
 alias getip='arp -a | awk '\''NR==1 { print $ 2}'\'''
 alias docker-rm-all='docker rm $(docker ps -a -q)'
