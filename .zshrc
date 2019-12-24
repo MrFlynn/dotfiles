@@ -1,34 +1,20 @@
-# Path to your oh-my-zsh installation.
-export ZSH=$HOME/.oh-my-zsh
+# History settings.
+export HISTFILE=$HOME/.zsh_history
 
-# Theme.
-ZSH_THEME="dracula"
+HISTSIZE=10000
+SAVEHIST=10000
 
-# Uncomment the following line to use hyphen-insensitive completion. Case
-# sensitive completion must be off. _ and - will be interchangeable.
-HYPHEN_INSENSITIVE="true"
+setopt appendhistory
+setopt incappendhistory
+setopt extended_history
+setopt sharehistory
 
-# Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
-
-# Uncomment the following line if you want to disable marking untracked files
-# under VCS as dirty. This makes repository status check for large repositories
-# much, much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
-
-# Uncomment the following line if you want to change the command execution time
-# stamp shown in the history command output.
-# The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
 HIST_STAMPS="yyyy-mm-dd"
 
-# Oh-my-zsh plugins.
-plugins=(git brew osx pip tmux docker vagrant)
-
-source $ZSH/oh-my-zsh.sh
-
 # Custom completions FPATH
-fpath=(/usr/local/share/zsh-completions $fpath)
-fpath+=~/.zfunc
+# fpath=(/usr/local/share/zsh/functions $fpath)
+# fpath+=~/.zfunc
+# _comp_options="${_comp_options/NO_warnnestedvar/}"
 
 # --- Path & Variables ----
 
@@ -39,7 +25,6 @@ export SSH_KEY_PATH="$HOME/.ssh/"
 export PATH=$HOME/.miniconda3/bin:$PATH
 
 # HSTR configuration.
-export HISTFILE=~/.zsh_history
 export HSTR_CONFIG=hicolor,prompt-bottom,blacklist #favorites-view
 
 # GOPATH settings.
@@ -60,10 +45,12 @@ bindkey -s "\C-r" "\eqhstr\n"
 alias getip='arp -a | awk '\''NR==1 { print $ 2}'\'''
 alias docker-rm-all='docker rm $(docker ps -a -q)'
 alias mcversions="curl https://launchermeta.mojang.com/mc/game/version_manifest.json | jq .versions | jq -r '.[].id'"
-alias reload="source $HOME/.zshrc"
+alias reload="export precmd_functions=(); source $HOME/.zshrc"
 alias ntmux="tmux new-session"
+alias ls="ls -G"
 
 # --- Functions ---
+
 fileconvert () {
   # Inputs
   local input_extension="$1"
@@ -95,3 +82,5 @@ alert () {
     $(command -v osascript) -e "display notification \"$text\"" with title \"$(tty)\"""
   fi
 }
+
+eval "$(starship init zsh)"

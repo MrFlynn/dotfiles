@@ -43,9 +43,11 @@ color onedark
 set termguicolors
 
 " Automatic settings based on filetypes.
-autocmd FileType markdown,yaml set tabstop=2 shiftwidth=2
+autocmd FileType markdown,yaml,json set tabstop=2 shiftwidth=2
+autocmd FileType markdown set tw=80
 autocmd BufRead,BufNewFile *.conf setfiletype dosini
 autocmd BufRead,BufNewFile *.tfvars setfiletype terraform
+autocmd BufRead,BufNewFile Vagrantfile* setfiletype ruby
 
 " Persistent Undos
 set undodir=$HOME/.vim/undo
@@ -53,3 +55,6 @@ set undofile
 
 " Delete comment character from joined lines.
 set formatoptions+=j
+
+" Enable mouse events.
+set mouse=a
