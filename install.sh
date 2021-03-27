@@ -1,55 +1,84 @@
 #!/usr/bin/env bash
 
-# Move in script.
-# Nick Pleatsikas, 2017.
+set -ou pipefail
+
+# Install required packages.
+if [[ "$(uname -s)" == Linux ]]; then
+    DISTRO=$(awk -F= '/^NAME/{print $2}' /etc/os-release)
+    
+    if [[ "$DISTRO" == "Ubuntu" ]]; then
+        apt-get install -y zsh fzf ripgrep git
+    else
+        >&2 echo "OS not supported!"
+        exit 1
+    fi
+elif [[ "$(uname -s)" == Darwin ]]; then
+    # Install homebrew
+    if ! command -v brew &> /dev/null
+    then
+        /bin/bash -c \
+            "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    fi
+
+    brew install zsh fzf ripgrep git
+else
+    >&2 echo "OS not supported!"
+    exit 1
+fi
+
+# Change default shell to zsh.
+chsh -s "$(command -v zsh)"
 
 # Move all dotfiles.
-find . -type f -iname "*." -exec mv -t ~ {} +
+find . -type f -iname ".*" -not -name ".gitignore" -exec mv -t ~ {} +
 
-# Check if last command ran correctly. Everything depends on this...
-if [[ $? -ne 0 ]]; then
-	echo "Move failed. Exiting..."
-	exit 1
-fi
+# Install vim-plug.
+curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
-# Clone newest copy of Dracula theme to ZSH.
-git clone https://github.com/dracula/zsh.git ~/.oh-my-zsh/themes/ --depth 1 
-
-# If the last command failed to run and the dir exits, move the backup.
-if [[ $? -ne 0 ]] &&  [[ -d ~/.oh-my-zsh-themes ]]; then
-	mv .oh-my-zsh/themes/dracula.zsh-theme ~/.oh-my-zsh/themes/
-fi
-
-# Install Vundle.
-git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim --depth 1
-
-# If last command failed, then prompt but continue running.
-if [[ $? -ne 0 ]]; then
-	echo "Vundle install failed."
-fi
-
-# Check if the colors dir exists before moving the theme to it.
-if [[ ! -d ~/.vim/colors ]]; then
-	mkdir -p ~/.vim/colors
-fi
-
-# Install vundle packages
-vim +PluginInstall +qall
-
-# If last command ran correctly, then move theme from Vundle download.
-if [[ $? -e 0 ]]; then
-	mv ~/.vim/bundle/onedark.vim/colors/onedark.vim ~/.vim/colors/
-else
-	echo "Vundle installation failed... Using backup."
-	mv .vim/colors/onedark.vim ~/.vim/colors/
-fi
-
-# Check if .ssh dir exists before moving configuration files to it.
-if [[ ! -d ~/.ssh/ ]]; then
-	mkdir ~/.ssh
-fi
+# Install vim packages.
+vim +PlugInstall
 
 # Configure git.
 git config --global user.email "nick@pleatsikas.me"
 git config --global user.name "MrFlynn"
 git config --global core.editor vim
+
+genssh() {
+    ssh-keygen -t ed25519 -f ~/.ssh/github
+
+    if [[ "$(uname -s)" == Linux ]]; then
+        cat >> ~/.ssh/config <<EOF
+Host github.com
+    HostName github.com
+    User git
+    IdentityFile ~/.ssh/github
+EOF
+    elif [[ "$(uname -s)" == Darwin ]]; then
+        cat >> ~/.ssh/config <<EOF
+Host github.com
+    HostName github.com
+    User git
+    IdentityFile ~/.ssh/github
+    AddKeysToAgent yes
+    UseKeychain yes
+EOF
+    fi
+}
+
+# (Optional) Create ssh key.
+while read -r option; do
+    case $option in
+        yes | y)
+            genssh
+            exit            
+            ;;
+        no | n)
+            exit
+            ;;
+        *)
+            >&2 echo "Unknown option"
+            ;;
+    esac
+done
+
