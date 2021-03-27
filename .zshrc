@@ -13,7 +13,7 @@ autoload -Uz _zinit
 
 # User-defined plugins
 zinit light zsh-users/zsh-autosuggestions
-zinit light sendresorhus/pure
+zinit light sindresorhus/pure
 
 zinit load zdharma/history-search-multi-word
 
