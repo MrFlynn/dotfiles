@@ -5,7 +5,8 @@ These are the dotfile I use (for the most part) on personal Linux and Unix syste
 Just run the installation script. It will warn you if you are missing any
 dependencies or if the script was unable to automatically install them.
 
-Once installed, just restart your shell.
+Once installed, enter vim and run the `PlugInstall` command to get all required vim
+plugins and customizations.
 
 ```bash
 $ ./install.sh
