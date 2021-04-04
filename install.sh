@@ -36,9 +36,6 @@ find . -type f -iname ".*" -not -name ".gitignore" -exec mv -t ~ {} +
 curl -sfLo ~/.vim/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
-# Install vim packages.
-vim +qall +PlugInstall
-
 # Configure git.
 git config --global user.email "nick@pleatsikas.me"
 git config --global user.name "MrFlynn"
@@ -82,4 +79,4 @@ while read -r option; do
     esac
 done
 
-echo "Done"
+printf "Install complete.\n\nEnter vim and run the PlugInstall command to complete your environment setup.\n"
