@@ -1,16 +1,20 @@
 # .dotfiles
-These are the dotfile I use (for the most part) on personal Linux and Unix systems. 
+These are the dotfile I use (for the most part) on personal Unix systems. 
 
 ## Installation
-Just run the installation script. It will warn you if you are missing any
-dependencies or if the script was unable to automatically install them.
+You'll need to install several dependencies before you can use these dotfiles.
 
-Once installed, enter vim and run the `PlugInstall` command to get all required vim
-plugins and customizations.
+- zsh
+- [nix](https://nixos.org/)
+- [nix-darwin](https://github.com/LnL7/nix-darwin)
+
+Once you've installed these dependencies, you can then run the following
+commands. Once these have finished running (it'll take some time), your
+environment is now set up.
 
 ```bash
-$ ./install.sh
-$ exec zsh
+$ cp -r {.zshrc,.vimrc,.tmux.conf,.nixpkgs/} ~
+$ darwin-rebuild switch
 ```
 
 ## License
