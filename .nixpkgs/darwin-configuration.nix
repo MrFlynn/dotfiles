@@ -3,7 +3,9 @@ let
   dontCheckPackage = drv: drv.overridePythonAttrs (old: { doCheck = false; });
   customized-python = pkgs.python311.withPackages(p: with p; [
     (dontCheckPackage httpie)
+    (dontCheckPackage pipx)
   ]);
+  unstable = import <nixos-unstable> { config = { allowUnfree = true; }; };
 in
 {
   # List packages installed in system profile. To search by name, run:
@@ -14,10 +16,12 @@ in
     fzf
     ripgrep
     tmux
-    go
+    unstable.go
     jq
-    trash-cli
     customized-python
+    pipenv
+    shellcheck
+    moreutils
   ];
 
   # Use a custom configuration.nix location.
@@ -31,6 +35,15 @@ in
   # Create /etc/zshrc that loads the nix-darwin environment.
   programs.zsh.enable = true;  # default shell on catalina
   # programs.fish.enable = true;
+
+  # Manage homebrew
+  homebrew.enable = true;
+  homebrew.brews = [
+    "trash"
+  ];
+  homebrew.casks = [
+    "multipass"
+  ];
 
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
