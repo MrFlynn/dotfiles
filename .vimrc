@@ -1,7 +1,7 @@
 " Plugin options
 call plug#begin('~/.vim/plugged')
 
-Plug 'NLKNguyen/papercolor-theme'
+Plug 'morhetz/gruvbox'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 
@@ -10,7 +10,7 @@ call plug#end()
 " Visual options
 set ruler
 set background=dark
-colorscheme PaperColor
+colorscheme gruvbox
 
 " Formatting options
 set tabstop=4 softtabstop=0 expandtab shiftwidth=4 smarttab
