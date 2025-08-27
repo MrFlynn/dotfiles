@@ -1,24 +1,20 @@
-" Plugin options
-call plug#begin('~/.vim/plugged')
-
-Plug 'morhetz/gruvbox'
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
-
-call plug#end()
-
 " Visual options
 set ruler
-set background=dark
-colorscheme gruvbox
+
+colorscheme space-vim-dark
+set termguicolors
+hi Comment    cterm=italic guifg=#5C6370 ctermfg=59
+hi Normal     ctermbg=NONE guibg=NONE
+hi LineNr     ctermbg=NONE guibg=NONE
+hi SignColumn ctermbg=NONE guibg=NONE
 
 " Formatting options
 set tabstop=4 softtabstop=0 expandtab shiftwidth=4 smarttab
 set formatoptions+=j
 
 autocmd FileType markdown set tw=80
-autocmd FileType yaml set tabstop=2 shiftwidth=2
-autocmd FileType nix set tabstop=2 shiftwidth=2
+autocmd FileType yaml     set tabstop=2 shiftwidth=2
+autocmd FileType nix      set tabstop=2 shiftwidth=2
 
 " Interaction options
 set mouse=a
@@ -42,3 +38,4 @@ endfunction
 " Commands
 nnoremap <silent> <C-m> :call ToggleMouseOptions()<cr>
 command! -bang -nargs=* Rg call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case ".shellescape(<q-args>), 1, {'options': '--delimiter : --nth 4..'}, <bang>0)
+
