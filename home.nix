@@ -24,19 +24,9 @@ let
   ];
 
   macPackages = with pkgs; [
+    # Currently broken due to swift build dependency: keylock
     darwin.trash
   ];
-
-  space-vim-dark = pkgs.vimUtils.buildVimPlugin {
-    name = "space-vim-dark";
-
-    src = pkgs.fetchFromGitHub {
-      owner = "liuchengxu";
-      repo = "space-vim-dark";
-      rev = "0ab698bd2a3959e3bed7691ac55ba4d8abefd143";
-      sha256 = "0h1adjk9hnknhmgzw1vdfa1gslpx7an8p0ghd0qknnirlygcz9qr";
-    };
-  };
 
 in
 {
@@ -48,6 +38,10 @@ in
 
   # home-manager version.
   home.stateVersion = "25.05";
+
+  nixpkgs.overlays = [
+    (import ./overlays/custom-packages.nix)
+  ];
 
   home.packages = basePackages
     ++ (if pkgs.stdenv.isLinux then linuxPackages else [])
