@@ -19,7 +19,7 @@ dependencies are as follows:
 ```bash
 $ curl -fsSL https://install.determinate.systems/nix | sh -s -- install --determinate
 $ nix-channel --add https://nixos.org/channels/nixos-unstable
-$ nix-channel --add https://github.com/nix-community/home-manager/archive/release-25.05.tar.gz home-manager
+$ nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
 $ nix-channel --update
 $ nix-shell '<home-manager>' -A install
 ```
