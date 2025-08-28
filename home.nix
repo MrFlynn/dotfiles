@@ -24,7 +24,7 @@ let
   ];
 
   macPackages = with pkgs; [
-    trash
+    darwin.trash
   ];
 
   space-vim-dark = pkgs.vimUtils.buildVimPlugin {
