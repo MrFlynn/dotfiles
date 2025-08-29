@@ -154,6 +154,7 @@ in
     plugins = with pkgs.vimPlugins; [
       fzf-vim
       space-vim-dark
+      vim-visual-multi
     ];
 
     extraConfig = builtins.readFile ./config.vim;
