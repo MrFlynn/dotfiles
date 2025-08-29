@@ -56,6 +56,54 @@ in
   # Program customization.
   programs.home-manager.enable = true;
 
+  programs.ghostty = {
+    enable = true;
+    package = null; # Separate installation.
+
+    settings = {
+      cursor-style = "block";
+      font-size = 16;
+      macos-icon = "xray";
+      macos-titlebar-style = "tabs";
+      mouse-hide-while-typing = true;
+      shell-integration-features = "no-cursor";
+      theme = "0x96f";
+      window-colorspace = "display-p3";
+    };
+  };
+
+  programs.git = {
+    enable = true;
+
+    ignores = [
+      "*.swp"
+      ".DS_Store"
+    ];
+
+    userName = "Nick Pleatsikas";
+    userEmail = "nick@pleatsikas.me";
+
+    extraConfig = {
+      core = {
+        editor = "vim";
+      };
+
+      init = {
+        defaultBranch = "main";
+      };
+
+      pager = {
+        show = "less -N";
+      };
+
+      url = {
+        "git@github.com:" = {
+          insteadOf = "https://github.com/";
+        };
+      };
+    };
+  };
+
   programs.mise = {
     enable = true;
     enableZshIntegration = true;
