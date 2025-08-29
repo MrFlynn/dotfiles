@@ -32,9 +32,12 @@ in
 {
   home.username = "nick";
   home.homeDirectory =
-    if pkgs.stdenv.isLinux then "/home/${config.home.username}"
-    else if pkgs.stdenv.isDarwin then "/Users/${config.home.username}"
-    else throw "Unsupported system";
+    if pkgs.stdenv.isLinux then
+      "/home/${config.home.username}"
+    else if pkgs.stdenv.isDarwin then
+      "/Users/${config.home.username}"
+    else
+      throw "Unsupported system";
 
   # home-manager version.
   home.stateVersion = "25.05";
@@ -43,9 +46,10 @@ in
     (import ./overlays/custom-packages.nix)
   ];
 
-  home.packages = basePackages
-    ++ (if pkgs.stdenv.isLinux then linuxPackages else [])
-    ++ (if pkgs.stdenv.isDarwin then macPackages else []);
+  home.packages =
+    basePackages
+    ++ (if pkgs.stdenv.isLinux then linuxPackages else [ ])
+    ++ (if pkgs.stdenv.isDarwin then macPackages else [ ]);
 
   home.sessionVariables = {
     # ZSH customizations to disable right hand prompt and fix colors.
@@ -111,7 +115,7 @@ in
     globalConfig = {
       settings = {
         experimental = true;
-        idiomatic_version_file_enable_tools = ["python"];
+        idiomatic_version_file_enable_tools = [ "python" ];
       };
 
       tools = {
@@ -135,9 +139,7 @@ in
         user = "git";
         addKeysToAgent = "yes";
         identityFile = "~/.ssh/id_ed25519";
-        extraOptions = if pkgs.stdenv.isDarwin
-          then { "UseKeychain" = "yes"; }
-          else { };
+        extraOptions = if pkgs.stdenv.isDarwin then { "UseKeychain" = "yes"; } else { };
       };
     };
   };

@@ -16,9 +16,8 @@ self: super: {
 
     buildInputs = with super; [
       gnumake
-      (
-        builtins.getFlake "git+https://github.com/timothyklim/swift-flake?rev=${swift-flake-rev}"
-      ).packages.${super.system}.default
+      (builtins.getFlake "git+https://github.com/timothyklim/swift-flake?rev=${swift-flake-rev}")
+      .packages.${super.system}.default
     ];
 
     installPhase = ''
@@ -44,4 +43,3 @@ self: super: {
     };
   };
 }
-
