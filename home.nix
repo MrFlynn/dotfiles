@@ -172,6 +172,11 @@ in
       share = true;
     };
 
+    shellAliases = {
+      less = "less -SN --use-color";
+      reload = "source ~/.zshrc";
+    };
+
     initContent = builtins.readFile ./zinit-settings.zsh;
   };
 }
