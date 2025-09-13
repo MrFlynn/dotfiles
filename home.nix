@@ -99,12 +99,6 @@ in
       pager = {
         show = "less -N";
       };
-
-      url = {
-        "git@github.com:" = {
-          insteadOf = "https://github.com/";
-        };
-      };
     };
   };
 
