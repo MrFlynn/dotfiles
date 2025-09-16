@@ -3,6 +3,7 @@
 let
   basePackages = with pkgs; [
     fzf
+    gemini-cli
     git
     gitui
     gnused
@@ -183,6 +184,9 @@ in
       else
         { };
 
-    initContent = builtins.readFile ./zinit-settings.zsh;
+    initContent =
+      (builtins.readFile ./zsh/zinit-settings.zsh)
+      + (builtins.readFile ./zsh/bindkeys-common.zsh)
+      + (if pkgs.stdenv.isDarwin then (builtins.readFile ./zsh/bindkeys-mac.zsh) else "");
   };
 }
