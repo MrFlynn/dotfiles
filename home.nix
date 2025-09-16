@@ -173,6 +173,16 @@ in
       reload = "source ~/.zshrc";
     };
 
+    siteFunctions =
+      if pkgs.stdenv.isDarwin then
+        {
+          notify = ''
+            osascript -e "display notification \"$1\" with title \"Command finished\""
+          '';
+        }
+      else
+        { };
+
     initContent = builtins.readFile ./zinit-settings.zsh;
   };
 }
