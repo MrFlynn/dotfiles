@@ -65,13 +65,15 @@ in
     enable = true;
     package = null; # Separate installation.
 
+    enableZshIntegration = true;
+
     settings = {
       cursor-style = "block";
       font-size = 16;
       macos-icon = "xray";
       macos-titlebar-style = "tabs";
       mouse-hide-while-typing = true;
-      shell-integration-features = "no-cursor";
+      shell-integration-features = "no-cursor,ssh-terminfo";
       theme = "0x96f";
       window-colorspace = "display-p3";
     };
