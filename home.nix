@@ -5,13 +5,13 @@ let
     fzf
     gemini-cli
     git
-    gitui
     gnused
     htop
     ijq
     jless
     jq
     kubectl
+    lazygit
     mise
     moreutils
     ripgrep
