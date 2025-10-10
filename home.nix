@@ -102,6 +102,10 @@ in
       pager = {
         show = "less -N";
       };
+
+      pull = {
+        rebase = true;
+      };
     };
   };
 
