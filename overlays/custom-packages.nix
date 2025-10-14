@@ -1,7 +1,3 @@
-let
-  swift-flake-rev = "c26f560b73ca34b32aa7b6462a9973a13e3b2da9";
-
-in
 self: super: {
   keylock = super.stdenv.mkDerivation {
     pname = "keylock";
@@ -15,9 +11,10 @@ self: super: {
     };
 
     buildInputs = with super; [
+      cacert
       gnumake
-      (builtins.getFlake "git+https://github.com/timothyklim/swift-flake?rev=${swift-flake-rev}")
-      .packages.${super.system}.default
+      swift
+      swiftpm
     ];
 
     installPhase = ''

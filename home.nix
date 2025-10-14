@@ -25,7 +25,7 @@ let
   ];
 
   macPackages = with pkgs; [
-    # Currently broken due to swift build dependency: keylock
+    keylock
     darwin.trash
   ];
 
