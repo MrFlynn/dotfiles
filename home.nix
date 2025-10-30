@@ -15,6 +15,7 @@ let
     mise
     moreutils
     ripgrep
+    shellcheck
     tree
     uv
     wget
