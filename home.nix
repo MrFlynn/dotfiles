@@ -62,6 +62,52 @@ in
   # Program customization.
   programs.home-manager.enable = true;
 
+  programs.helix = {
+    enable = true;
+    package = pkgs.evil-helix;
+
+    extraPackages = with pkgs; [
+      pyright
+      ruff
+      shfmt
+    ];
+
+    languages = {
+      language = [
+        {
+          name = "bash";
+          auto-format = true;
+          formatter = {
+            command = "shfmt";
+          };
+        }
+        {
+          name = "python";
+          auto-format = true;
+          language-servers = [
+            "pyright"
+            "ruff"
+          ];
+        }
+      ];
+
+      language-server = {
+        pyright = {
+          command = "pyright-langserver";
+          args = [ "--stdio" ];
+        };
+        ruff = {
+          command = "ruff";
+          args = [ "server" ];
+        };
+      };
+    };
+
+    settings = {
+      theme = "jellybeans";
+    };
+  };
+
   programs.ghostty = {
     enable = true;
     package = null; # Separate installation.
