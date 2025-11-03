@@ -59,6 +59,8 @@ in
     ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE = "fg=5";
   };
 
+  news.display = "silent";
+
   # Program customization.
   programs.home-manager.enable = true;
 
