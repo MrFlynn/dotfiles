@@ -67,8 +67,15 @@ in
     package = pkgs.evil-helix;
 
     extraPackages = with pkgs; [
+      # Go
+      gopls
+      golangci-lint
+
+      # Python
       pyright
       ruff
+
+      # Shell
       shfmt
     ];
 
@@ -82,8 +89,21 @@ in
           };
         }
         {
+          name = "go";
+          auto-format = true;
+          indent = {
+            tab-width = 4;
+            unit = "\t";
+          };
+          language-servers = [ "gopls" ];
+        }
+        {
           name = "python";
           auto-format = true;
+          indent = {
+            tab-width = 4;
+            unit = "    ";
+          };
           language-servers = [
             "pyright"
             "ruff"
@@ -92,6 +112,10 @@ in
       ];
 
       language-server = {
+        gopls = {
+          command = "gopls";
+          args = [ "serve" ];
+        };
         pyright = {
           command = "pyright-langserver";
           args = [ "--stdio" ];
