@@ -91,42 +91,14 @@ in
           };
         }
         {
-          name = "go";
-          auto-format = true;
-          indent = {
-            tab-width = 4;
-            unit = "\t";
-          };
-          language-servers = [ "gopls" ];
-        }
-        {
           name = "python";
           auto-format = true;
-          indent = {
-            tab-width = 4;
-            unit = "    ";
-          };
           language-servers = [
             "pyright"
             "ruff"
           ];
         }
       ];
-
-      language-server = {
-        gopls = {
-          command = "gopls";
-          args = [ "serve" ];
-        };
-        pyright = {
-          command = "pyright-langserver";
-          args = [ "--stdio" ];
-        };
-        ruff = {
-          command = "ruff";
-          args = [ "server" ];
-        };
-      };
     };
 
     settings = {
