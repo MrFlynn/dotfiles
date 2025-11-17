@@ -79,6 +79,10 @@ in
 
       # Shell
       shfmt
+
+      # Yaml
+      yaml-language-server
+      yamlfmt
     ];
 
     languages = {
@@ -99,6 +103,19 @@ in
           ];
         }
       ];
+
+      language-server = {
+        yaml-language-server = {
+          config.yaml = {
+            schemaStore.enable = true;
+            schemaStore.url = "https://www.schemastore.org/api/json/catalog.json";
+
+            schemas = {
+              kubernetes = "*.yaml";
+            };
+          };
+        };
+      };
     };
 
     settings = {
