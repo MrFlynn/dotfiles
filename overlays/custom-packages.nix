@@ -12,13 +12,14 @@ self: super: {
 
     buildInputs = with super; [
       cacert
-      gnumake
       swift
       swiftpm
     ];
 
     installPhase = ''
-      make install PREFIX=$out
+      swift build -c release
+      mkdir -p "$out/bin"
+      cp -f .build/release/keylock "$out/bin/keylock"
     '';
 
     meta = {
