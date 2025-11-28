@@ -156,7 +156,7 @@ in
       };
 
       core = {
-        editor = "vim";
+        editor = "hx";
       };
 
       init = {
