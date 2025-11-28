@@ -185,7 +185,7 @@ in
 
       tools = {
         go = "1.25.0";
-        python = "3.13.7";
+        python = "3.14.0";
 
         "go:github.com/philippta/flyscrape/cmd/flyscrape" = "latest";
         "go:golang.org/x/vuln/cmd/govulncheck" = "latest";
