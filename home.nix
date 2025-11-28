@@ -149,10 +149,12 @@ in
       ".DS_Store"
     ];
 
-    userName = "Nick Pleatsikas";
-    userEmail = "nick@pleatsikas.me";
+    settings = {
+      user = {
+        name = "Nick Pleatsikas";
+        email = "nick@pleatsikas.me";
+      };
 
-    extraConfig = {
       core = {
         editor = "vim";
       };
