@@ -1,24 +1,27 @@
 { config, pkgs, ... }:
 
 let
-  basePackages = with pkgs; [
-    fzf
-    gemini-cli
-    git
-    gnused
-    htop
-    ijq
-    jless
-    jq
-    kubectl
-    lazygit
-    mise
-    moreutils
-    ripgrep
-    shellcheck
-    tree
-    uv
-    wget
+  nur = import <nur> { inherit pkgs; };
+
+  basePackages = [
+    pkgs.fzf
+    pkgs.git
+    pkgs.gnused
+    pkgs.htop
+    pkgs.ijq
+    pkgs.jless
+    pkgs.jq
+    pkgs.kubectl
+    pkgs.lazygit
+    pkgs.mise
+    pkgs.moreutils
+    pkgs.ripgrep
+    pkgs.shellcheck
+    pkgs.tree
+    pkgs.uv
+    pkgs.wget
+
+    nur.repos.charmbracelet.crush
   ];
 
   linuxPackages = with pkgs; [
@@ -47,6 +50,16 @@ in
   nixpkgs.overlays = [
     (import ./overlays/custom-packages.nix)
   ];
+
+  home.file = {
+    ".config/crush/crush.json".text = builtins.toJSON {
+      providers = {
+        openrouter = {
+          api_key = "$(op item get 'OpenRouter API Key' --field credential --reveal)";
+        };
+      };
+    };
+  };
 
   home.packages =
     basePackages
