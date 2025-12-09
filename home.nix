@@ -61,6 +61,9 @@ in
 
   news.display = "silent";
 
+  # Disable annoying unfree license warning. I don't care.
+  nixpkgs.config.allowUnfree = true;
+
   # Program customization.
   programs.home-manager.enable = true;
 
