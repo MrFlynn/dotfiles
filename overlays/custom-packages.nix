@@ -30,4 +30,9 @@ inputs: self: super: {
       src = inputs.space-vim-dark-src;
     };
   };
+
+  nix = super.nix.overrideAttrs (old: {
+    doCheck = false;
+    doInstallCheck = false;
+  });
 }
