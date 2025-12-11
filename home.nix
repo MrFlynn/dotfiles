@@ -1,8 +1,6 @@
 { config, pkgs, ... }:
 
 let
-  nur = import <nur> { inherit pkgs; };
-
   basePackages = [
     pkgs.fzf
     pkgs.git
@@ -21,7 +19,7 @@ let
     pkgs.uv
     pkgs.wget
 
-    nur.repos.charmbracelet.crush
+    pkgs.nur.repos.charmbracelet.crush
   ];
 
   linuxPackages = with pkgs; [
@@ -47,10 +45,6 @@ in
   # home-manager version.
   home.stateVersion = "25.05";
 
-  nixpkgs.overlays = [
-    (import ./overlays/custom-packages.nix)
-  ];
-
   home.file = {
     ".config/crush/crush.json".text = builtins.toJSON {
       providers = {
@@ -73,9 +67,6 @@ in
   };
 
   news.display = "silent";
-
-  # Disable annoying unfree license warning. I don't care.
-  nixpkgs.config.allowUnfree = true;
 
   # Program customization.
   programs.home-manager.enable = true;
