@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -14,11 +15,11 @@
       flake = false;
     };
 
+    # Custom packages
     keylock-src = {
       url = "github:kfv/keylock/d808c1651d65c3159a8902481e8c75c8aa5c807f";
       flake = false;
     };
-
     space-vim-dark-src = {
       url = "github:liuchengxu/space-vim-dark/0ab698bd2a3959e3bed7691ac55ba4d8abefd143";
       flake = false;

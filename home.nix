@@ -6,24 +6,23 @@
 }:
 
 let
-  basePackages = [
-    pkgs.fzf
-    pkgs.git
-    pkgs.gnused
-    pkgs.htop
-    pkgs.ijq
-    pkgs.jless
-    pkgs.jq
-    pkgs.kubectl
-    pkgs.lazygit
-    pkgs.mise
-    pkgs.moreutils
-    pkgs.ripgrep
-    pkgs.shellcheck
-    pkgs.tree
-    pkgs.uv
-    pkgs.wget
-
+  basePackages = with pkgs; [
+    fzf
+    git
+    gnused
+    htop
+    ijq
+    jless
+    jq
+    kubectl
+    lazygit
+    mise
+    moreutils
+    ripgrep
+    shellcheck
+    tree
+    uv
+    wget
   ];
 
   linuxPackages = with pkgs; [
