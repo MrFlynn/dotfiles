@@ -1,4 +1,9 @@
-{ config, pkgs, ... }:
+{
+  config,
+  inputs,
+  pkgs,
+  ...
+}:
 
 let
   basePackages = [
@@ -19,7 +24,6 @@ let
     pkgs.uv
     pkgs.wget
 
-    pkgs.nur.repos.charmbracelet.crush
   ];
 
   linuxPackages = with pkgs; [
@@ -45,10 +49,13 @@ in
   # home-manager version.
   home.stateVersion = "25.05";
 
-  home.file = {
-    ".config/crush/crush.json".text = builtins.toJSON {
+  programs.crush = {
+    enable = true;
+    settings = {
       providers = {
         openrouter = {
+          name = "openrouter";
+          id = "openrouter";
           api_key = "$(op item get 'OpenRouter API Key' --field credential --reveal)";
         };
       };

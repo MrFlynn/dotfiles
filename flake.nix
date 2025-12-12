@@ -7,9 +7,11 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nur = {
-      url = "github:nix-community/NUR";
-      inputs.nixpkgs.follows = "nixpkgs";
+
+    # For `crush`.
+    charmbracelet = {
+      url = "github:charmbracelet/nur";
+      flake = false;
     };
 
     keylock-src = {
@@ -28,7 +30,7 @@
       self,
       nixpkgs,
       home-manager,
-      nur,
+      charmbracelet,
       ...
     }@inputs:
     let
@@ -37,7 +39,6 @@
         inherit system;
         config.allowUnfree = true;
         overlays = [
-          nur.overlays.default
           self.overlays.default
         ];
       };
@@ -48,7 +49,10 @@
       homeConfigurations."nick" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         extraSpecialArgs = { inherit inputs; };
-        modules = [ ./home.nix ];
+        modules = [
+          ./home.nix
+          (import "${charmbracelet}/modules/crush/home-manager.nix")
+        ];
       };
     };
 }
