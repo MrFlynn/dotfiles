@@ -2,10 +2,20 @@
   config,
   inputs,
   pkgs,
+  currentSystem,
+  systemConfig,
   ...
 }:
 
 let
+  isLinux = builtins.elem currentSystem [
+    "x86_64-linux"
+    "aarch64-linux"
+  ];
+  isDarwin = builtins.elem currentSystem [
+    "aarch64-darwin"
+  ];
+
   basePackages = with pkgs; [
     fzf
     git
@@ -25,28 +35,15 @@ let
     wget
   ];
 
-  linuxPackages = with pkgs; [
-    trash-cli
-  ];
-
-  macPackages = with pkgs; [
-    keylock
-    darwin.trash
-  ];
-
 in
 {
   home.username = "nick";
-  home.homeDirectory =
-    if pkgs.stdenv.isLinux then
-      "/home/${config.home.username}"
-    else if pkgs.stdenv.isDarwin then
-      "/Users/${config.home.username}"
-    else
-      throw "Unsupported system";
+  home.homeDirectory = "${systemConfig.homeDirectoryBase}/${config.home.username}";
 
   # home-manager version.
   home.stateVersion = "25.05";
+
+  accounts.calendar.basePath = ".local/share/calendar";
 
   programs.crush = {
     enable = true;
@@ -61,10 +58,7 @@ in
     };
   };
 
-  home.packages =
-    basePackages
-    ++ (if pkgs.stdenv.isLinux then linuxPackages else [ ])
-    ++ (if pkgs.stdenv.isDarwin then macPackages else [ ]);
+  home.packages = basePackages ++ (systemConfig.additionalPackages pkgs);
 
   home.sessionVariables = {
     # ZSH customizations to disable right hand prompt and fix colors.
@@ -217,7 +211,7 @@ in
         user = "git";
         addKeysToAgent = "yes";
         identityFile = "~/.ssh/id_ed25519";
-        extraOptions = if pkgs.stdenv.isDarwin then { "UseKeychain" = "yes"; } else { };
+        extraOptions = if isDarwin then { "UseKeychain" = "yes"; } else { };
       };
     };
   };
@@ -258,7 +252,7 @@ in
     };
 
     siteFunctions =
-      if pkgs.stdenv.isDarwin then
+      if isDarwin then
         {
           notify = ''
             osascript -e "display notification \"$1\" with title \"Command finished\""
@@ -270,6 +264,6 @@ in
     initContent =
       (builtins.readFile ./zsh/zinit-settings.zsh)
       + (builtins.readFile ./zsh/bindkeys-common.zsh)
-      + (if pkgs.stdenv.isDarwin then (builtins.readFile ./zsh/bindkeys-mac.zsh) else "");
+      + (pkgs.lib.concatMapStrings (f: "\n" + (builtins.readFile f)) systemConfig.additionalZshConfigs);
   };
 }

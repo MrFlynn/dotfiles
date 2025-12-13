@@ -35,25 +35,41 @@
       ...
     }@inputs:
     let
-      system = "aarch64-darwin";
-      pkgs = import nixpkgs {
-        inherit system;
-        config.allowUnfree = true;
-        overlays = [
-          self.overlays.default
-        ];
-      };
+      systemConfigs = import ./systems.nix;
+      systems = builtins.attrNames systemConfigs;
+
+      mkHomeConfig =
+        system:
+        let
+          pkgs = import nixpkgs {
+            inherit system;
+            config.allowUnfree = true;
+            overlays = [
+              self.overlays.default
+            ];
+          };
+          systemConfig = systemConfigs.${system};
+        in
+        home-manager.lib.homeManagerConfiguration {
+          inherit pkgs;
+          extraSpecialArgs = {
+            inherit inputs systemConfig;
+            currentSystem = system;
+          };
+          modules = [
+            ./home.nix
+            (import "${charmbracelet}/modules/crush/home-manager.nix")
+          ];
+        };
     in
     {
       overlays.default = import ./overlays/custom-packages.nix inputs;
 
-      homeConfigurations."nick" = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-        extraSpecialArgs = { inherit inputs; };
-        modules = [
-          ./home.nix
-          (import "${charmbracelet}/modules/crush/home-manager.nix")
-        ];
-      };
+      homeConfigurations = builtins.listToAttrs (
+        map (system: {
+          name = "nick-${system}";
+          value = mkHomeConfig system;
+        }) systems
+      );
     };
 }
