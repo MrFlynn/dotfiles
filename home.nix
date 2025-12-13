@@ -132,6 +132,8 @@ in
 
   programs.ghostty = {
     enable = true;
+    systemd.enable = false;
+
     package = null; # Separate installation.
 
     enableZshIntegration = true;
