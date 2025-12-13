@@ -10,29 +10,33 @@ so that I can easily copy them to other systems if I don't want to (or can't) go
 through the process of installing nix on to them.
 
 ## Installation
-You will need to install both [nix](https://nixos.org/) and
-[home-manager](https://nix-community.github.io/home-manager/index.xhtml#ch-installation)
-to install these dotfiles. For the nix portion I personally use Determinate
-System's Nix distribution, so the commands I use to set up both of those
-dependencies are as follows:
+You will need to install [nix](https://nixos.org/) to use these dotfiles. I
+recommend using
+[Determinate Systems' Nix distribution](https://determinate.systems/posts/determinate-nix-installer/):
 
 ```bash
-$ curl -fsSL https://install.determinate.systems/nix | sh -s -- install --determinate
-$ nix-channel --add https://nixos.org/channels/nixos-unstable
-$ nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
-$ nix-channel --add https://github.com/nix-community/NUR/archive/main.tar.gz nur
-$ nix-channel --update
-$ nix-shell '<home-manager>' -A install
+curl -fsSL https://install.determinate.systems/nix | sh -s -- install --determinate
 ```
 
-Next, to install the dotfiles/packages/etc. use the following commands:
+### Initial Setup
+Clone the repository and switch to the home-manager configuration (this installs
+home-manager on first run):
 
 ```bash
-$ mkdir -p ~/.config/home-manager
-$ rm -f ~/.config/home-manager/*
-$ git clone git@github.com:MrFlynn/dotfiles.git ~/.config/home-manager
-$ home-manager switch
+git clone git@github.com:MrFlynn/dotfiles.git ~/.config/home-manager
+cd ~/.config/home-manager
+nix run github:nix-community/home-manager -- switch --flake ".#nick-$(nix eval --raw --impure --expr 'builtins.currentSystem')"
 ```
+
+### Subsequent Updates
+After the initial setup, you can use the home-manager command directly:
+
+```bash
+home-manager switch --flake ".#nick-$(nix eval --raw --impure --expr 'builtins.currentSystem')"
+```
+
+The flake automatically detects your system architecture and applies the
+appropriate configuration.
 
 ## License
 This repository is licensed under the [MIT](/LICENSE) license.
