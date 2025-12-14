@@ -156,6 +156,7 @@ in
     ignores = [
       "*.swp"
       ".DS_Store"
+      "mise.local.toml"
     ];
 
     settings = {
@@ -249,6 +250,7 @@ in
     };
 
     shellAliases = {
+      gr = "cd $(git rev-parse --show-toplevel)";
       less = "less -SN --use-color";
       reload = "source ~/.zshrc";
     };
