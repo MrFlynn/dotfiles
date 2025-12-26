@@ -125,7 +125,7 @@ in
           name = "python";
           auto-format = true;
           language-servers = [
-            "pyright"
+            "basedpyright"
             "ruff"
           ];
         }
