@@ -17,9 +17,11 @@ let
   ];
 
   basePackages = with pkgs; [
+    basedpyright
     fzf
     git
     gnused
+    gopls
     htop
     ijq
     jless
@@ -48,6 +50,26 @@ in
   programs.crush = {
     enable = true;
     settings = {
+      lsp = {
+        go = {
+          command = "gopls";
+        };
+        python = {
+          command = "basedpyright-langserver";
+          args = [ "--stdio" ];
+        };
+      };
+      permissions = {
+        allowed_tools = [
+          "glob"
+          "grep"
+          "ls"
+          "lsp_diagnostics"
+          "lsp_references"
+          "todos"
+          "view"
+        ];
+      };
       providers = {
         openrouter = {
           name = "openrouter";
@@ -77,11 +99,9 @@ in
 
     extraPackages = with pkgs; [
       # Go
-      gopls
       golangci-lint
 
       # Python
-      pyright
       ruff
 
       # Shell
