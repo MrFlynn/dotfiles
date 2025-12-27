@@ -3,6 +3,7 @@ on:
   push:
     paths:
       - "**/*.nix"
+      - "flake.lock"
 jobs:
   check:
     runs-on: ubuntu-latest
