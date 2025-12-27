@@ -1,11 +1,11 @@
-inputs: self: super: {
-  keylock = super.stdenv.mkDerivation {
+inputs: final: prev: {
+  keylock = prev.stdenv.mkDerivation {
     pname = "keylock";
     version = "0.1";
 
     src = inputs.keylock-src;
 
-    buildInputs = with super; [
+    buildInputs = with prev; [
       cacert
       swift
       swiftpm
@@ -23,15 +23,15 @@ inputs: self: super: {
     };
   };
 
-  vimPlugins = super.vimPlugins // {
-    space-vim-dark = super.vimUtils.buildVimPlugin {
+  vimPlugins = prev.vimPlugins // {
+    space-vim-dark = prev.vimUtils.buildVimPlugin {
       name = "space-vim-dark";
 
       src = inputs.space-vim-dark-src;
     };
   };
 
-  nix = super.nix.overrideAttrs (old: {
+  nix = prev.nix.overrideAttrs (old: {
     doCheck = false;
     doInstallCheck = false;
   });
