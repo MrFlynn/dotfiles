@@ -24,16 +24,54 @@ jobs:
         os:
           - ubuntu-24.04
           - ubuntu-24.04-arm
-          - macos-15
+          - macos-26
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v5
       - uses: cachix/install-nix-action@v31
         with:
           github_access_token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Dry run home-manager switch for ${{ matrix.system }}
+          extra_nix_config: |
+            trusted-users = runner nick
+      - name: Create user
         run: |
-          nix run github:nix-community/home-manager -- \
-            switch --dry-run --flake ".#nick-$( \
-              nix eval --raw --impure --expr 'builtins.currentSystem' \
-            )"
+          if ! id nick >/dev/null 2>&1; then
+            if [[ "$RUNNER_OS" == "Linux" ]]; then
+              sudo useradd -m nick
+            elif [[ "$RUNNER_OS" == "macOS" ]]; then
+              sudo sysadminctl -addUser nick -home /Users/nick -shell /bin/bash
+              sudo createhomedir -c -u nick
+            fi
+          fi
+
+          # Add profile directories
+          sudo -u nick \
+            env HOME=~nick \
+            bash -lc "mkdir -p ~/.local/state/nix/profiles"
+
+          sudo mkdir -p /nix/var/nix/profiles/per-user/nick
+          sudo chown -R nick /nix/var/nix/profiles/per-user/nick
+      - name: Perform manual clone of repository
+        run: |
+          git clone --depth=1 \
+            "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" \
+            /tmp/dotfiles
+          cd /tmp/dotfiles && git checkout "${GITHUB_SHA}"
+
+          if [[ "$RUNNER_OS" == "macOS" ]]; then
+            sudo mv /tmp/dotfiles /Users/nick/dotfiles
+            sudo chown -R nick /Users/nick/dotfiles
+          elif [[ "$RUNNER_OS" == "Linux" ]]; then
+            sudo mv /tmp/dotfiles ~nick/dotfiles
+            sudo chown -R nick ~nick/dotfiles
+          fi
+      - name: Perform dry-run of home-manager switch for ${{ matrix.os }}
+        run: |
+          sudo -u nick env HOME=~nick bash -lc '
+            source /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+
+            cd ~/dotfiles
+            nix run github:nix-community/home-manager -- \
+              switch --dry-run --flake ".#nick-$( \
+                nix eval --raw --impure --expr builtins.currentSystem \
+              )"
+          '
