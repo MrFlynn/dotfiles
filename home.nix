@@ -161,7 +161,7 @@ in
     settings = {
       cursor-style = "block";
       font-size = 16;
-      macos-icon = "glass";
+      macos-icon = "official";
       macos-titlebar-style = "tabs";
       mouse-hide-while-typing = true;
       shell-integration-features = "no-cursor,ssh-terminfo";
