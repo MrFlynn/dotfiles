@@ -10,9 +10,12 @@
     };
 
     # For `crush`.
-    charmbracelet = {
-      url = "github:charmbracelet/nur";
-      flake = false;
+    nur = {
+      # Pin to commit that includes 0.35.0 update for crush. 0.36.0 and later are broken
+      # because of some weird patchelf nonsense being run on darwin machines, which do not
+      # use elf binaries.
+      url = "github:charmbracelet/nur/31adc0287833be262b176169f2fb19a57b02406b";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     # Custom packages
@@ -31,7 +34,7 @@
       self,
       nixpkgs,
       home-manager,
-      charmbracelet,
+      nur,
       ...
     }@inputs:
     let
@@ -58,7 +61,7 @@
           };
           modules = [
             ./home.nix
-            (import "${charmbracelet}/modules/crush/home-manager.nix")
+            nur.homeModules.crush
           ];
         };
     in
