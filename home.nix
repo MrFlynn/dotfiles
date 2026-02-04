@@ -47,6 +47,19 @@ in
 
   accounts.calendar.basePath = ".local/share/calendar";
 
+  home.packages = basePackages ++ (systemConfig.additionalPackages pkgs);
+
+  home.sessionVariables = {
+    # ZSH customizations to disable right hand prompt and fix colors.
+    RPS1 = "";
+    ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE = "fg=5";
+  };
+
+  news.display = "silent";
+
+  # Program customization.
+  programs.home-manager.enable = true;
+
   programs.crush = {
     enable = true;
     settings = {
@@ -79,19 +92,6 @@ in
       };
     };
   };
-
-  home.packages = basePackages ++ (systemConfig.additionalPackages pkgs);
-
-  home.sessionVariables = {
-    # ZSH customizations to disable right hand prompt and fix colors.
-    RPS1 = "";
-    ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE = "fg=5";
-  };
-
-  news.display = "silent";
-
-  # Program customization.
-  programs.home-manager.enable = true;
 
   programs.helix = {
     enable = true;
