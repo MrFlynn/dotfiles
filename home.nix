@@ -88,6 +88,7 @@ in
           name = "openrouter";
           id = "openrouter";
           api_key = "$(op item get 'OpenRouter API Key' --field credential --reveal)";
+          models = [ ];
         };
       };
     };

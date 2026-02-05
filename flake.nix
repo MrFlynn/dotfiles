@@ -9,12 +9,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # For `crush`.
     nur = {
-      # Pin to commit that includes 0.35.0 update for crush. 0.36.0 and later are broken
-      # because of some weird patchelf nonsense being run on darwin machines, which do not
-      # use elf binaries.
-      url = "github:charmbracelet/nur/31adc0287833be262b176169f2fb19a57b02406b";
+      url = "github:charmbracelet/nur";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -23,6 +19,7 @@
       url = "github:kfv/keylock/d808c1651d65c3159a8902481e8c75c8aa5c807f";
       flake = false;
     };
+
     space-vim-dark-src = {
       url = "github:liuchengxu/space-vim-dark/0ab698bd2a3959e3bed7691ac55ba4d8abefd143";
       flake = false;

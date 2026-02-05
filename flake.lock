@@ -60,17 +60,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1769200429,
-        "narHash": "sha256-uwiZn/F+YTGSk6wYYwsmKB+WXRBpNAoP1uqTwh/9VgQ=",
+        "lastModified": 1770302584,
+        "narHash": "sha256-ls0ARIA9TqFaCIkQ9LNwyd1wnacaPQmwbj08GoowLqk=",
         "owner": "charmbracelet",
         "repo": "nur",
-        "rev": "31adc0287833be262b176169f2fb19a57b02406b",
+        "rev": "d5005e4f9480de47a2e8dd89e13f5e84ea93e91c",
         "type": "github"
       },
       "original": {
         "owner": "charmbracelet",
         "repo": "nur",
-        "rev": "31adc0287833be262b176169f2fb19a57b02406b",
         "type": "github"
       }
     },
