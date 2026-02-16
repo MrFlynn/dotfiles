@@ -10,7 +10,7 @@
     };
 
     nur = {
-      url = "github:charmbracelet/nur";
+      url = "github:malikwirin/charmbracelet-nur/fce1df7d90b081116cec5430f1fa07a17ad5757a";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
