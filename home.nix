@@ -235,6 +235,9 @@ in
     enable = true;
     enableDefaultConfig = false;
 
+    # Enable orbstack ssh config on mac.
+    includes = if isDarwin then [ "~/.orbstack/ssh/config" ] else [ ];
+
     # Host rules.
     matchBlocks = {
       "github.com" = {
