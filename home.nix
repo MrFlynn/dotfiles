@@ -165,6 +165,9 @@ in
       macos-icon = "official";
       macos-titlebar-style = "tabs";
       mouse-hide-while-typing = true;
+      notify-on-command-finish = "unfocused";
+      notify-on-command-finish-action = "no-bell,notify";
+      notify-on-command-finish-after = "15s";
       shell-integration-features = "no-cursor,ssh-terminfo";
       theme = "0x96f";
       window-colorspace = "display-p3";
@@ -281,16 +284,6 @@ in
       rr = "git rev-parse --show-toplevel";
       cr = "cd $(rr)";
     };
-
-    siteFunctions =
-      if isDarwin then
-        {
-          notify = ''
-            osascript -e "display notification \"$1\" with title \"Command finished\""
-          '';
-        }
-      else
-        { };
 
     initContent =
       (builtins.readFile ./zsh/zinit-settings.zsh)
