@@ -184,11 +184,6 @@ in
     ];
 
     settings = {
-      user = {
-        name = "Nick Pleatsikas";
-        email = "nick@pleatsikas.me";
-      };
-
       core = {
         editor = "hx";
       };
@@ -207,6 +202,11 @@ in
 
       rebase = {
         autoStash = true;
+      };
+
+      user = {
+        name = "Nick Pleatsikas";
+        email = "nick@pleatsikas.me";
       };
     };
   };
