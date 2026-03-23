@@ -28,6 +28,7 @@ let
     jq
     kubectl
     lazygit
+    mergiraf
     mise
     moreutils
     ripgrep
@@ -177,6 +178,12 @@ in
   programs.git = {
     enable = true;
 
+    attributes = let
+      gitattributesContent = pkgs.runCommand "mergiraf-gitattributes" { } ''
+        ${pkgs.mergiraf}/bin/mergiraf languages --gitattributes > $out
+      '';
+    in pkgs.lib.splitString "\n" (builtins.readFile gitattributesContent);
+
     ignores = [
       "*.swp"
       ".DS_Store"
@@ -190,6 +197,15 @@ in
 
       init = {
         defaultBranch = "main";
+      };
+
+      merge = {
+        conflictStyle = "diff3";
+
+        mergiraf = {
+          name = "mergiraf";
+          driver = "mergiraf merge --git %O %A %B -s %S -x %X -y %Y -p %P -l %L";
+        };
       };
 
       pager = {
