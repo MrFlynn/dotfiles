@@ -60,17 +60,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1771157561,
-        "narHash": "sha256-YkwlMW/OseztF2DDan9sYAmtFVXWAbzgeuAGkqRLz7E=",
-        "owner": "malikwirin",
-        "repo": "charmbracelet-nur",
-        "rev": "fce1df7d90b081116cec5430f1fa07a17ad5757a",
+        "lastModified": 1774277431,
+        "narHash": "sha256-cc4sP5UhERP0Vp22IrLLwAlNmyNHS53mTEmKsIrXT4g=",
+        "owner": "charmbracelet",
+        "repo": "nur",
+        "rev": "2f583201456c3bffd14bfd09bfeb53e256385df8",
         "type": "github"
       },
       "original": {
-        "owner": "malikwirin",
-        "repo": "charmbracelet-nur",
-        "rev": "fce1df7d90b081116cec5430f1fa07a17ad5757a",
+        "owner": "charmbracelet",
+        "repo": "nur",
         "type": "github"
       }
     },
