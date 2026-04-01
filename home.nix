@@ -34,7 +34,6 @@ let
     ripgrep
     shellcheck
     tree
-    uv
     wget
   ];
 
@@ -269,6 +268,14 @@ in
   programs.tmux = {
     enable = true;
     extraConfig = builtins.readFile ./tmux.conf;
+  };
+
+  programs.uv = {
+    enable = true;
+
+    settings = {
+      exclude-newer = "2d";
+    };
   };
 
   programs.vim = {
