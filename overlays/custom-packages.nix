@@ -25,7 +25,8 @@ inputs: final: prev: {
 
   vimPlugins = prev.vimPlugins // {
     space-vim-dark = prev.vimUtils.buildVimPlugin {
-      name = "space-vim-dark";
+      pname = "space-vim-dark";
+      version = "unstable-2021-01-01";
 
       src = inputs.space-vim-dark-src;
     };
