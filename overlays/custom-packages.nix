@@ -36,4 +36,8 @@ inputs: final: prev: {
     doCheck = false;
     doInstallCheck = false;
   });
+
+  direnv = prev.direnv.overrideAttrs (old: {
+    doCheck = false;
+  });
 }
