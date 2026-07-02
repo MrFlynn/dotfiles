@@ -177,11 +177,13 @@ in
   programs.git = {
     enable = true;
 
-    attributes = let
-      gitattributesContent = pkgs.runCommand "mergiraf-gitattributes" { } ''
-        ${pkgs.mergiraf}/bin/mergiraf languages --gitattributes > $out
-      '';
-    in pkgs.lib.splitString "\n" (builtins.readFile gitattributesContent);
+    attributes =
+      let
+        gitattributesContent = pkgs.runCommand "mergiraf-gitattributes" { } ''
+          ${pkgs.mergiraf}/bin/mergiraf languages --gitattributes > $out
+        '';
+      in
+      pkgs.lib.splitString "\n" (builtins.readFile gitattributesContent);
 
     ignores = [
       "*.swp"
@@ -259,7 +261,8 @@ in
         User = "git";
         AddKeysToAgent = "yes";
         IdentityFile = "~/.ssh/id_ed25519";
-      } // (if isDarwin then { UseKeychain = "yes"; } else { });
+      }
+      // (if isDarwin then { UseKeychain = "yes"; } else { });
     };
   };
 
