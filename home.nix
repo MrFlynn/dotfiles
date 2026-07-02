@@ -253,15 +253,13 @@ in
     # Enable orbstack ssh config on mac.
     includes = if isDarwin then [ "~/.orbstack/ssh/config" ] else [ ];
 
-    # Host rules.
-    matchBlocks = {
+    settings = {
       "github.com" = {
-        hostname = "github.com";
-        user = "git";
-        addKeysToAgent = "yes";
-        identityFile = "~/.ssh/id_ed25519";
-        extraOptions = if isDarwin then { "UseKeychain" = "yes"; } else { };
-      };
+        HostName = "github.com";
+        User = "git";
+        AddKeysToAgent = "yes";
+        IdentityFile = "~/.ssh/id_ed25519";
+      } // (if isDarwin then { UseKeychain = "yes"; } else { });
     };
   };
 
