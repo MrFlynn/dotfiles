@@ -302,7 +302,6 @@ in
     };
 
     shellAliases = {
-      gr = "cd $(git rev-parse --show-toplevel)";
       less = "less -SN --use-color";
       reload = "source ~/.zshrc";
       rr = "git rev-parse --show-toplevel";
