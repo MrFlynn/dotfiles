@@ -37,6 +37,30 @@ let
     wget
   ];
 
+  # Shell script wrapping the 1Password CLI. On WSL, locate and run the
+  # Windows-installed op.exe; otherwise fall back to the nix-installed binary.
+  opWrapper = pkgs.writeShellScriptBin "op" ''
+    if command -v wslpath > /dev/null && command -v wslvar > /dev/null; then
+      # Find base folder for 1Password CLI in current user's Windows WinGet Packages
+      WIN_USER_PATH="$(wslpath "$(wslvar USERPROFILE 2> /dev/null)")"
+      WIN_OP_BASE="$WIN_USER_PATH/AppData/Local/Microsoft/WinGet/Packages"
+
+      # Find the latest folder matching the pattern (AgileBits.1Password.CLI*)
+      OP_DIR=$(ls -td "$WIN_OP_BASE"/AgileBits.1Password.CLI* 2> /dev/null | head -n1)
+
+      if [ -z "$OP_DIR" ]; then
+        echo "[ERROR] Could not find 1Password CLI folder in $WIN_OP_BASE" >&2
+        exit 1
+      fi
+
+      mapfile -d "" op_env_vars < <(env -0 | grep -z ^OP_ | cut -z -d= -f1)
+      export WSLENV="''${WSLENV:-}:$(IFS=:; echo "''${op_env_vars[*]}")"
+      exec "$OP_DIR/op.exe" "$@"
+    else
+      exec ${pkgs._1password-cli}/bin/op "$@"
+    fi
+  '';
+
 in
 {
   home.username = "nick";
@@ -47,7 +71,10 @@ in
 
   accounts.calendar.basePath = ".local/share/calendar";
 
-  home.packages = basePackages ++ (systemConfig.additionalPackages pkgs);
+  home.packages =
+    basePackages
+    ++ (systemConfig.additionalPackages pkgs)
+    ++ (pkgs.lib.optionals isLinux [ opWrapper ]);
 
   home.sessionVariables = {
     # ZSH customizations to disable right hand prompt and fix colors.
