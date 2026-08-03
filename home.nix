@@ -68,7 +68,7 @@ in
   home.homeDirectory = "${systemConfig.homeDirectoryBase}/${config.home.username}";
 
   # home-manager version.
-  home.stateVersion = "25.05";
+  home.stateVersion = "26.05";
 
   accounts.calendar.basePath = ".local/share/calendar";
 
