@@ -2,6 +2,7 @@
   config,
   inputs,
   pkgs,
+  lib,
   currentSystem,
   systemConfig,
   ...
@@ -70,6 +71,14 @@ in
   home.stateVersion = "25.05";
 
   accounts.calendar.basePath = ".local/share/calendar";
+
+  # Patch for some weird behavior where home-manager seems to get confused about
+  # whether the crush.json file is actually managed by home-manager, so it bails
+  # early if the file exists already (e.g. from a prior generation). This is a fix
+  # to remove the file before checking the existence of target file.
+  home.activation.removeCrushConfig = lib.hm.dag.entryBefore ["checkLinkTargets"] ''
+    rm -f ~/.config/crush/crush.json
+  '';
 
   home.packages =
     basePackages
