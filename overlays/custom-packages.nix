@@ -9,10 +9,12 @@ inputs: final: prev: {
       cacert
       swift
       swiftpm
+      git
     ];
 
+    swiftpmFlags = [ "--verbose" ];
+
     installPhase = ''
-      swift build -c release
       mkdir -p "$out/bin"
       cp -f .build/release/keylock "$out/bin/keylock"
     '';
