@@ -317,7 +317,7 @@ in
 
   programs.vim = {
     enable = true;
-    defaultEditor = true;
+    packageConfigurable = pkgs.vim;
 
     plugins = with pkgs.vimPlugins; [
       fzf-vim
