@@ -275,8 +275,8 @@ in
       };
 
       tools = {
-        go = "1.26.5";
-        python = "3.14.6";
+        go = "1.27.3";
+        python = "3.15.1";
 
         "go:github.com/philippta/flyscrape/cmd/flyscrape" = "latest";
         "go:golang.org/x/vuln/cmd/govulncheck" = "latest";
