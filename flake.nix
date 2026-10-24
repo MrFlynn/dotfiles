@@ -9,11 +9,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nur = {
-      url = "github:charmbracelet/nur";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     # Custom packages
     keylock-src = {
       url = "github:kfv/keylock/d808c1651d65c3159a8902481e8c75c8aa5c807f";
@@ -31,7 +26,6 @@
       self,
       nixpkgs,
       home-manager,
-      nur,
       ...
     }@inputs:
     let
@@ -58,7 +52,6 @@
           };
           modules = [
             ./home.nix
-            nur.homeModules.crush
           ];
         };
     in
