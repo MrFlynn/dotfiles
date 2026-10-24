@@ -123,7 +123,7 @@ in
         openrouter = {
           name = "openrouter";
           id = "openrouter";
-          api_key = "$(op item get 'OpenRouter API Key' --field credential --reveal)";
+          api_key = "$(op item get 'OpenRouter API Key - 1Password' --field credential --reveal)";
           models = [ ];
         };
       };
