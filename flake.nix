@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    llm-agents.url = "github:numtide/llm-agents.nix";
 
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -25,6 +26,7 @@
     {
       self,
       nixpkgs,
+      llm-agents,
       home-manager,
       ...
     }@inputs:
@@ -40,6 +42,7 @@
             config.allowUnfree = true;
             overlays = [
               self.overlays.default
+              llm-agents.overlays.shared-nixpkgs
             ];
           };
           systemConfig = systemConfigs.${system};
