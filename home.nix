@@ -29,6 +29,7 @@ let
     jq
     kubectl
     lazygit
+    pkgs.llm-agents.claude-code
     mergiraf
     mise
     moreutils
