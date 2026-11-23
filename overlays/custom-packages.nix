@@ -33,13 +33,4 @@ inputs: final: prev: {
       src = inputs.space-vim-dark-src;
     };
   };
-
-  nix = prev.nix.overrideAttrs (old: {
-    doCheck = false;
-    doInstallCheck = false;
-  });
-
-  direnv = prev.direnv.overrideAttrs (old: {
-    doCheck = false;
-  });
 }
