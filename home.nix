@@ -72,14 +72,6 @@ in
 
   accounts.calendar.basePath = ".local/share/calendar";
 
-  # Patch for some weird behavior where home-manager seems to get confused about
-  # whether the crush.json file is actually managed by home-manager, so it bails
-  # early if the file exists already (e.g. from a prior generation). This is a fix
-  # to remove the file before checking the existence of target file.
-  home.activation.removeCrushConfig = lib.hm.dag.entryBefore ["checkLinkTargets"] ''
-    rm -f ~/.config/crush/crush.json
-  '';
-
   home.packages =
     basePackages
     ++ (systemConfig.additionalPackages pkgs)
@@ -95,40 +87,6 @@ in
 
   # Program customization.
   programs.home-manager.enable = true;
-
-  programs.crush = {
-    enable = true;
-    settings = {
-      lsp = {
-        go = {
-          command = "gopls";
-        };
-        python = {
-          command = "basedpyright-langserver";
-          args = [ "--stdio" ];
-        };
-      };
-      permissions = {
-        allowed_tools = [
-          "glob"
-          "grep"
-          "ls"
-          "lsp_diagnostics"
-          "lsp_references"
-          "todos"
-          "view"
-        ];
-      };
-      providers = {
-        openrouter = {
-          name = "openrouter";
-          id = "openrouter";
-          api_key = "$(op item get 'OpenRouter API Key - 1Password' --field credential --reveal)";
-          models = [ ];
-        };
-      };
-    };
-  };
 
   programs.helix = {
     enable = true;
