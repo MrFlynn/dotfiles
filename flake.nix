@@ -30,42 +30,25 @@
       home-manager,
       ...
     }@inputs:
-    let
-      systemConfigs = import ./systems.nix;
-      systems = builtins.attrNames systemConfigs;
-
-      mkHomeConfig =
-        system:
-        let
-          pkgs = import nixpkgs {
-            inherit system;
-            config.allowUnfree = true;
-            overlays = [
-              self.overlays.default
-              llm-agents.overlays.shared-nixpkgs
-            ];
-          };
-          systemConfig = systemConfigs.${system};
-        in
-        home-manager.lib.homeManagerConfiguration {
-          inherit pkgs;
-          extraSpecialArgs = {
-            inherit inputs systemConfig;
-            currentSystem = system;
-          };
-          modules = [
-            ./home.nix
-          ];
-        };
-    in
     {
       overlays.default = import ./overlays/custom-packages.nix inputs;
 
-      homeConfigurations = builtins.listToAttrs (
-        map (system: {
-          name = "nick-${system}";
-          value = mkHomeConfig system;
-        }) systems
-      );
+      homeConfigurations = nixpkgs.lib.mapAttrs' (
+        system: systemConfig:
+        nixpkgs.lib.nameValuePair "nick-${system}" (
+          home-manager.lib.homeManagerConfiguration {
+            pkgs = import nixpkgs {
+              inherit system;
+              config.allowUnfree = true;
+              overlays = [
+                self.overlays.default
+                llm-agents.overlays.shared-nixpkgs
+              ];
+            };
+            extraSpecialArgs = { inherit systemConfig; };
+            modules = [ ./home.nix ];
+          }
+        )
+      ) (import ./systems.nix);
     };
 }

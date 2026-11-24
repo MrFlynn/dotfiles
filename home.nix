@@ -1,21 +1,12 @@
 {
   config,
-  inputs,
   pkgs,
-  lib,
-  currentSystem,
   systemConfig,
   ...
 }:
 
 let
-  isLinux = builtins.elem currentSystem [
-    "x86_64-linux"
-    "aarch64-linux"
-  ];
-  isDarwin = builtins.elem currentSystem [
-    "aarch64-darwin"
-  ];
+  inherit (pkgs.stdenv.hostPlatform) isLinux isDarwin;
 
   basePackages = with pkgs; [
     basedpyright
