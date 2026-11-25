@@ -69,9 +69,8 @@ in
     ++ (pkgs.lib.optionals isLinux [ opWrapper ]);
 
   home.sessionVariables = {
-    # ZSH customizations to disable right hand prompt and fix colors.
+    # ZSH customization to disable right hand prompt.
     RPS1 = "";
-    ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE = "fg=5";
   };
 
   news.display = "silent";
@@ -328,9 +327,20 @@ in
   programs.zsh = {
     enable = true;
 
-    # Disable the built-in plugins because zinit will manage them.
-    autosuggestion.enable = false;
+    autosuggestion = {
+      enable = true;
+      highlight = "fg=5";
+    };
+
     syntaxHighlighting.enable = false;
+
+    plugins = [
+      {
+        name = "history-search-multi-word";
+        src = pkgs.zsh-history-search-multi-word;
+        file = "share/zsh/zsh-history-search-multi-word/history-search-multi-word.plugin.zsh";
+      }
+    ];
 
     history = {
       append = true;
@@ -344,9 +354,12 @@ in
       cr = "cd $(rr)";
     };
 
-    initContent =
-      (builtins.readFile ./zsh/zinit-settings.zsh)
-      + (builtins.readFile ./zsh/bindkeys-common.zsh)
-      + (pkgs.lib.concatMapStrings (f: "\n" + (builtins.readFile f)) systemConfig.additionalZshConfigs);
+    initContent = ''
+      fpath+=(${pkgs.pure-prompt}/share/zsh/site-functions)
+      autoload -U promptinit; promptinit
+      prompt pure
+    ''
+    + (builtins.readFile ./zsh/bindkeys-common.zsh)
+    + (pkgs.lib.concatMapStrings (f: "\n" + (builtins.readFile f)) systemConfig.additionalZshConfigs);
   };
 }
