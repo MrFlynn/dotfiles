@@ -20,7 +20,6 @@ let
     jq
     kubectl
     lazygit
-    pkgs.llm-agents.claude-code
     mergiraf
     mise
     moreutils
@@ -79,6 +78,54 @@ in
 
   # Program customization.
   programs.home-manager.enable = true;
+
+  programs.claude-code = {
+    enable = true;
+    package = pkgs.llm-agents.claude-code;
+
+    context = ''
+      Make sure to refresh changes to files before editing them. Changes may
+      have been introduced between messages, and you should avoid reverting
+      them where possible.
+
+      If a command is unavailable, try to run it first via nix using this
+      template:
+
+      ```
+        nix run nixpkgs#<package-name> -- <args>
+      ```
+    '';
+
+    lspServers = {
+      go = {
+        command = "gopls";
+        extensionToLanguage = {
+          ".go" = "go";
+        };
+      };
+
+      python = {
+        command = "basedpyright-langserver";
+        args = [ "--stdio" ];
+        extensionToLanguage = {
+          ".py" = "python";
+          ".pyi" = "python";
+        };
+      };
+    };
+
+    plugins = {
+      # The repo root is a marketplace; the plugin itself lives in plugin/.
+      modern-go-guidelines = "${
+        pkgs.fetchFromGitHub {
+          owner = "JetBrains";
+          repo = "go-modern-guidelines";
+          rev = "155dc7ca10da5e1f6c841503086957b1b37f5815";
+          hash = "sha256-Gm96NA55N2+YHH/3NW+qAeiqYkrsZeBT8EVgLP0Lx34=";
+        }
+      }/plugin";
+    };
+  };
 
   programs.helix = {
     enable = true;
